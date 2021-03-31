@@ -34,6 +34,10 @@ function Home() {
               ))}
             </select>
           )}
+          <p>
+            <b>Instructors:</b><br />
+            Francis Li<br />
+          </p>
         </div>
         <div className="col-md-7 offset-md-1">
           {cohorts.length > 0 && (
