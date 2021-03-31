@@ -37,6 +37,7 @@ function Home() {
           <p>
             <b>Instructors:</b><br />
             Francis Li<br />
+            Ryan Hang
           </p>
         </div>
         <div className="col-md-7 offset-md-1">
