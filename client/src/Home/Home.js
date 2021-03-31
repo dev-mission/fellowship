@@ -34,6 +34,9 @@ function Home() {
               ))}
             </select>
           )}
+          <p>
+          Ryan Hang
+          </p>
         </div>
         <div className="col-md-7 offset-md-1">
           {cohorts.length > 0 && (
