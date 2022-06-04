@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Meeting extends Model {
     /**
@@ -14,15 +12,18 @@ module.exports = (sequelize, DataTypes) => {
       Meeting.belongsTo(models.Cohort);
       Meeting.hasMany(models.Link);
     }
-  };
-  Meeting.init({
-    startsAt: DataTypes.DATE,
-    endsAt: DataTypes.DATE,
-    type: DataTypes.STRING,
-    desc: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Meeting',
-  });
+  }
+  Meeting.init(
+    {
+      startsAt: DataTypes.DATE,
+      endsAt: DataTypes.DATE,
+      type: DataTypes.STRING,
+      desc: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Meeting',
+    }
+  );
   return Meeting;
 };

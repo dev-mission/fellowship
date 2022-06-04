@@ -3,8 +3,6 @@ import { DateTime } from 'luxon';
 
 import Api from '../Api';
 import './Meetings.scss';
-import MeetingsC4SF from './MeetingsC4SF.png';
-import MeetingsUber from './MeetingsUber.png';
 
 function Meetings({ cohortId, cohortStartsOn }) {
   const [meetings, setMeetings] = useState([]);

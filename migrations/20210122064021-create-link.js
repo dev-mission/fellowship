@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Links', {
@@ -6,46 +5,46 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       MeetingId: {
         references: {
           model: {
-            tableName: 'Meetings'
+            tableName: 'Meetings',
           },
-          key: 'id'
+          key: 'id',
         },
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       position: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        defaultValue: 0
+        defaultValue: 0,
       },
       type: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       href: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       desc: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
-    await queryInterface.addIndex('Links', {fields: ['MeetingId', 'position']});
+    await queryInterface.addIndex('Links', { fields: ['MeetingId', 'position'] });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Links');
-  }
+  },
 };

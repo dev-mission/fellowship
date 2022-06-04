@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
+// eslint-disable-next-line no-unused-vars
 module.exports = (sequelize, DataTypes) => {
   class Enrollment extends Model {
     /**
@@ -11,14 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Enrollment.belongsTo(models.User);
+      Enrollment.belongsTo(models.Cohort);
     }
-  };
-  Enrollment.init({
-    UserId: DataTypes.INTEGER,
-    CohortId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Enrollment',
-  });
+  }
+  Enrollment.init(
+    {},
+    {
+      sequelize,
+      modelName: 'Enrollment',
+    }
+  );
   return Enrollment;
 };

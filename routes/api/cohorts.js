@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const HttpStatus = require('http-status-codes');
 
@@ -8,14 +6,14 @@ const models = require('../../models');
 
 const router = express.Router();
 
-router.get('/', async function(req, res) {
+router.get('/', async (req, res) => {
   const cohorts = await models.Cohort.findAll({
-    order: [['startsOn', 'DESC']]
+    order: [['startsOn', 'DESC']],
   });
   res.json(cohorts);
 });
 
-router.post('/', interceptors.requireAdmin, async function(req, res) {
+router.post('/', interceptors.requireAdmin, async (req, res) => {
   const cohort = models.Cohort.build(req.body);
   try {
     await cohort.save();
@@ -25,7 +23,7 @@ router.post('/', interceptors.requireAdmin, async function(req, res) {
   }
 });
 
-router.get('/:id', async function(req, res) {
+router.get('/:id', async (req, res) => {
   const cohort = await models.Cohort.findByPk(req.params.id);
   if (cohort) {
     res.json(cohort);
@@ -34,21 +32,21 @@ router.get('/:id', async function(req, res) {
   }
 });
 
-router.patch('/:id', interceptors.requireAdmin, async function(req, res) {
+router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   const cohort = await models.Cohort.findByPk(req.params.id);
   if (cohort) {
     try {
       await cohort.update(req.body);
-      res.status(HttpStatus.OK).end();  
+      res.status(HttpStatus.OK).end();
     } catch (error) {
       res.status(HttpStatus.UNPROCESSABLE_ENTITY).json(error);
     }
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }
-})
+});
 
-router.delete('/:id', interceptors.requireAdmin, async function(req, res) {
+router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   const cohort = await models.Cohort.findByPk(req.params.id);
   if (cohort) {
     await cohort.destroy();

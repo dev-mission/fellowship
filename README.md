@@ -77,17 +77,17 @@ This repository contains a custom CMS for the Dev/Mission Fellowship.
    run the following command and wait for the output to report DONE:
 
    ```
-<<<<<<< HEAD
+   <<<<<<< HEAD
    docker-compose stop
    Stopping fellowship_db_1          ... done
    Stopping fellowship_server_1      ... done
    Stopping fellowship_mailcatcher_1 ... done
-=======
+   =======
    docker compose stop
    Stopping full-stack-starter_db_1          ... done
    Stopping full-stack-starter_server_1      ... done
    Stopping full-stack-starter_mailcatcher_1 ... done
->>>>>>> upstream/main
+   >>>>>>> upstream/main
    ```
 
 8. That's it! After all this setup is complete, the only command you need to run to get

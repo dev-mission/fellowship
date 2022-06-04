@@ -5,7 +5,7 @@ import './Header.scss';
 import Api from './Api';
 import './Header.scss';
 import HeaderLogo from './HeaderLogo.png';
-import {useAuthContext} from './AuthContext';
+import { useAuthContext } from './AuthContext';
 
 function Header() {
   const navigate = useNavigate();
@@ -34,8 +34,17 @@ function Header() {
   return (
     <nav className="header navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div className="container">
-        <Link className="navbar-brand" to="/"><img src={HeaderLogo} alt="Dev/Mission Logo" /> Fellowship</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <Link className="navbar-brand" to="/">
+          <img src={HeaderLogo} alt="Dev/Mission Logo" /> Fellowship
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -50,13 +59,18 @@ function Header() {
                 <>
                   {user.isAdmin && (
                     <li className="nav-item">
-                      <Link className="nav-link" to="/admin">Admin</Link>
+                      <Link className="nav-link" to="/admin">
+                        Admin
+                      </Link>
                     </li>
                   )}
                   <li className="nav-item">
-                    <a className="nav-link" href="/logout" onClick={onLogout}>Log out</a>
+                    <a className="nav-link" href="/logout" onClick={onLogout}>
+                      Log out
+                    </a>
                   </li>
-                </>)}
+                </>
+              )}
               {!user && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">

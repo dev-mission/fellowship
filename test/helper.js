@@ -15,13 +15,16 @@ const loadFixtures = async (files) => {
   const filePaths = files.map((f) => path.resolve(__dirname, `fixtures/${f}.json`));
   await models.sequelize.transaction(async (transaction) => {
     await fixtures.loadFiles(filePaths, models, { transaction });
-    await models.sequelize.query(`
+    await models.sequelize.query(
+      `
       ALTER SEQUENCE "Attendees_id_seq" RESTART WITH 10;
       ALTER SEQUENCE "Links_id_seq" RESTART WITH 10;
       ALTER SEQUENCE "Meetings_id_seq" RESTART WITH 10;
       ALTER SEQUENCE "Cohorts_id_seq" RESTART WITH 10;
       ALTER SEQUENCE "Users_id_seq" RESTART WITH 10;
-    `, { transaction });
+    `,
+      { transaction }
+    );
   });
 };
 
@@ -33,7 +36,7 @@ const resetDatabase = async () => {
     DELETE FROM "Meetings";
     DELETE FROM "Cohorts";
     DELETE FROM "Users";
-  `);  
+  `);
 };
 
 beforeEach(async () => {

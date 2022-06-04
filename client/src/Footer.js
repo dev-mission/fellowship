@@ -5,9 +5,7 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <div className="container">
-        Copyright &copy; {now.getFullYear()} Dev/Mission
-      </div>      
+      <div className="container">Copyright &copy; {now.getFullYear()} Dev/Mission</div>
     </footer>
   );
 }

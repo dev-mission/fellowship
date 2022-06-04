@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Enrollments', {
@@ -6,40 +5,40 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       CohortId: {
         references: {
           model: {
-            tableName: 'Cohorts'
+            tableName: 'Cohorts',
           },
-          key: 'id'
+          key: 'id',
         },
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       UserId: {
         references: {
           model: {
-            tableName: 'Users'
+            tableName: 'Users',
           },
-          key: 'id'
+          key: 'id',
         },
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
-    await queryInterface.addIndex('Enrollments', {fields: ['CohortId', 'UserId'], unique: true});
+    await queryInterface.addIndex('Enrollments', { fields: ['CohortId', 'UserId'], unique: true });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Enrollments');
-  }
+  },
 };

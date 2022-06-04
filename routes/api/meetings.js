@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const HttpStatus = require('http-status-codes');
 
@@ -8,26 +6,27 @@ const models = require('../../models');
 
 const router = express.Router();
 
-router.get('/', async function(req, res) {
+router.get('/', async (req, res) => {
   const options = {
-    order: [['startsAt', 'DESC']]
+    order: [['startsAt', 'DESC']],
   };
   if (req.query.cohortId) {
     options.where = {
-      CohortId: req.query.cohortId
+      CohortId: req.query.cohortId,
     };
   }
   switch (req.query.include) {
-  case 'link':
-    options.include = models.Link;
-  default:
-    break;
+    case 'link':
+      options.include = models.Link;
+      break;
+    default:
+      break;
   }
   const meetings = await models.Meeting.findAll(options);
   res.json(meetings);
 });
 
-router.post('/', interceptors.requireAdmin, async function(req, res) {
+router.post('/', interceptors.requireAdmin, async (req, res) => {
   const meeting = models.Meeting.build(req.body);
   try {
     await meeting.save();
@@ -37,7 +36,7 @@ router.post('/', interceptors.requireAdmin, async function(req, res) {
   }
 });
 
-router.get('/:id', async function(req, res) {
+router.get('/:id', async (req, res) => {
   const meeting = await models.Meeting.findByPk(req.params.id);
   if (meeting) {
     res.json(meeting);
@@ -46,21 +45,21 @@ router.get('/:id', async function(req, res) {
   }
 });
 
-router.patch('/:id', interceptors.requireAdmin, async function(req, res) {
+router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   const meeting = await models.Meeting.findByPk(req.params.id);
   if (meeting) {
     try {
       await meeting.update(req.body);
-      res.status(HttpStatus.OK).end();  
+      res.status(HttpStatus.OK).end();
     } catch (error) {
       res.status(HttpStatus.UNPROCESSABLE_ENTITY).json(error);
     }
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }
-})
+});
 
-router.delete('/:id', interceptors.requireAdmin, async function(req, res) {
+router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   const meeting = await models.Meeting.findByPk(req.params.id);
   if (meeting) {
     await meeting.destroy();
