@@ -1,22 +1,24 @@
-import {useEffect, useState} from 'react';
-import {useHistory, useParams, useRouteMatch, Link} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 import Api from '../../../Api';
 
 function Meetings() {
-  const {id} = useParams();
-  const {url} = useRouteMatch();
-  const history = useHistory();
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [meeting, setMeeting] = useState();
   const [links, setLinks] = useState([]);
 
-  useEffect(function() {
-    Api.meetings.get(id).then(response => setMeeting(response.data));
-    Api.links.index(id).then(response => setLinks(response.data));
-  }, [id]);
+  useEffect(
+    function () {
+      Api.meetings.get(id).then((response) => setMeeting(response.data));
+      Api.links.index(id).then((response) => setLinks(response.data));
+    },
+    [id]
+  );
 
   function onClick(id) {
-    history.push(`${url}/links/${id}/edit`);
+    navigate(`links/${id}/edit`);
   }
 
   return (
@@ -24,16 +26,24 @@ function Meetings() {
       <h2>Meeting</h2>
       {meeting && (
         <p>
-          <b>Type:</b> {meeting.type}<br />
-          <b>Starts at:</b> {meeting.startsAt}<br />
-          <b>Ends at:</b> {meeting.endsAt}<br />
-          <b>Desc: </b> {meeting.desc}<br />
-          <Link className="btn btn-sm btn-outline-primary" to={`${url}/edit`}>Edit</Link>
+          <b>Type:</b> {meeting.type}
+          <br />
+          <b>Starts at:</b> {meeting.startsAt}
+          <br />
+          <b>Ends at:</b> {meeting.endsAt}
+          <br />
+          <b>Desc: </b> {meeting.desc}
+          <br />
+          <Link className="btn btn-sm btn-outline-primary" to="edit">
+            Edit
+          </Link>
         </p>
       )}
       <h3>Links</h3>
-      <Link className="btn btn-sm btn-outline-primary" to={`${url}/links/new`}>New</Link>
-      <table class="table">
+      <Link className="btn btn-sm btn-outline-primary" to="links/new">
+        New
+      </Link>
+      <table className="table">
         <thead>
           <tr>
             <th>Position</th>
@@ -43,8 +53,8 @@ function Meetings() {
           </tr>
         </thead>
         <tbody>
-          {links.map(l => (
-            <tr key={l.id} onClick={() => onClick(l.id)} style={{cursor: 'pointer'}}>
+          {links.map((l) => (
+            <tr key={l.id} onClick={() => onClick(l.id)} style={{ cursor: 'pointer' }}>
               <td>{l.position}</td>
               <td>{l.type}</td>
               <td>{l.href}</td>

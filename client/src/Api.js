@@ -17,16 +17,24 @@ instance.interceptors.response.use(
 );
 
 const Api = {
+  assets: {
+    create(data) {
+      return instance.post('/api/assets', data);
+    },
+    upload(url, headers, file) {
+      return instance.put(url, file, { headers });
+    },
+  },
   auth: {
     login(email, password) {
-      return instance.post('/api/auth/login', {email, password});
+      return instance.post('/api/auth/login', { email, password });
     },
     logout() {
       return instance.get('/api/auth/logout');
     },
     register(data) {
       return instance.post('/api/auth/register', data);
-    }
+    },
   },
   cohorts: {
     index() {
@@ -40,7 +48,7 @@ const Api = {
     },
     update(id, data) {
       return instance.patch(`/api/cohorts/${id}`, data);
-    }
+    },
   },
   links: {
     index(meetingId) {
@@ -48,7 +56,7 @@ const Api = {
       if (meetingId) {
         params.meetingId = meetingId;
       }
-      return instance.get('/api/links', {params});
+      return instance.get('/api/links', { params });
     },
     create(data) {
       return instance.post('/api/links', data);
@@ -61,7 +69,7 @@ const Api = {
     },
     delete(id) {
       return instance.delete(`/api/links/${id}`);
-    }
+    },
   },
   meetings: {
     index(cohortId, includeLinks) {
@@ -72,7 +80,7 @@ const Api = {
       if (includeLinks) {
         params.include = 'link';
       }
-      return instance.get('/api/meetings', {params});
+      return instance.get('/api/meetings', { params });
     },
     create(data) {
       return instance.post('/api/meetings', data);
@@ -82,24 +90,27 @@ const Api = {
     },
     update(id, data) {
       return instance.patch(`/api/meetings/${id}`, data);
-    }
+    },
   },
   passwords: {
     reset(email) {
-      return instance.post('/api/passwords', {email});
+      return instance.post('/api/passwords', { email });
     },
     get(token) {
       return instance.get(`/api/passwords/${token}`);
     },
     update(token, password) {
-      return instance.patch(`/api/passwords/${token}`, {password});
-    }
+      return instance.patch(`/api/passwords/${token}`, { password });
+    },
   },
   users: {
     me() {
       return instance.get('/api/users/me');
-    }
-  }
+    },
+    update(id, data) {
+      return instance.patch(`/api/users/${id}`, data);
+    },
+  },
 };
 
 export default Api;

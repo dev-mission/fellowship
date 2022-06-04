@@ -1,44 +1,49 @@
-import {useEffect} from 'react';
-import {useHistory, Link} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
+import './Header.scss';
 import Api from './Api';
 import './Header.scss';
 import HeaderLogo from './HeaderLogo.png';
 import {useAuthContext} from './AuthContext';
 
 function Header() {
-  const history = useHistory();
-  const {user, setUser} = useAuthContext();
+  const navigate = useNavigate();
+  const { user, setUser } = useAuthContext();
 
-  useEffect(function() {
-    Api.users.me()
-      .then(response => {
+  useEffect(
+    function () {
+      Api.users.me().then((response) => {
         if (response.status === 204) {
           setUser(null);
         } else {
           setUser(response.data);
         }
       });
-  }, [setUser]);
+    },
+    [setUser]
+  );
 
-  const onLogout = async function(event) {
+  async function onLogout(event) {
     event.preventDefault();
     await Api.auth.logout();
     setUser(null);
-    history.push('/');
-  };
+    navigate('/');
+  }
 
   return (
-    <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <nav className="header navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="/"><img src={HeaderLogo} alt="Dev/Mission Logo" /> Fellowship</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
-        </button>    
+        </button>
         <div className="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul className="navbar-nav flex-grow-1 mb-2 mb-md-0">
             <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/">Home</Link>
+              <Link className="nav-link" aria-current="page" to="/">
+                Home
+              </Link>
             </li>
             <div className="flex-grow-1 d-flex justify-content-end">
               {user && (
@@ -54,7 +59,9 @@ function Header() {
                 </>)}
               {!user && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/login">Log in</Link>
+                  <Link className="nav-link" to="/login">
+                    Log in
+                  </Link>
                 </li>
               )}
             </div>

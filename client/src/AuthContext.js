@@ -1,5 +1,5 @@
-import {createContext, useContext, useState} from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import { createContext, useContext, useState } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const authContext = createContext();
 
@@ -11,64 +11,23 @@ function AuthContextValue() {
   const [user, setUser] = useState(null);
   return {
     user,
-    setUser
+    setUser,
   };
 }
 
-function AuthContextProvider({children}) {
+function AuthContextProvider({ children }) {
   const value = AuthContextValue();
-  return (
-    <authContext.Provider value={value}>
-      {children}
-    </authContext.Provider>
-  );
+  return <authContext.Provider value={value}>{children}</authContext.Provider>;
 }
 
-function AuthProtectedRoute({ children, ...rest }) {
+function AuthProtected({ isAdminRequired, children }) {
+  const location = useLocation();
   const authContext = useAuthContext();
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        authContext.user ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
+  return authContext.user && (!isAdminRequired || authContext.user.isAdmin) ? (
+    children
+  ) : (
+    <Navigate to="/login" state={{ from: location }} replace />
   );
 }
 
-function AdminProtectedRoute({ children, ...rest }) {
-  const authContext = useAuthContext();
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        authContext.user?.isAdmin ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
-  );
-}
-
-export {
-  useAuthContext,
-  AuthContextProvider,
-  AuthProtectedRoute,
-  AdminProtectedRoute
-};
+export { useAuthContext, AuthContextProvider, AuthProtected };
