@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
   switch (req.query.include) {
     case 'link':
       options.include = models.Link;
+      options.order.push([models.Link, 'position', 'ASC']);
       break;
     default:
       break;
