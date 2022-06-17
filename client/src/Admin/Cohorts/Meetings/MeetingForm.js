@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import classNames from 'classnames';
+import { DateTime } from 'luxon';
 
 import Api from '../../../Api';
 import UnexpectedError from '../../../UnexpectedError';
@@ -16,7 +17,16 @@ function MeetingForm() {
   useEffect(
     function () {
       if (id) {
-        Api.meetings.get(id).then((response) => setMeeting(response.data));
+        Api.meetings.get(id).then((response) => {
+          const { data } = response;
+          if (data.startsAt) {
+            data.startsAt = DateTime.fromISO(data.startsAt).setZone('UTC').toFormat("yyyy-MM-dd'T'HH:mm");
+          }
+          if (data.endsAt) {
+            data.endsAt = DateTime.fromISO(data.endsAt).setZone('UTC').toFormat("yyyy-MM-dd'T'HH:mm");
+          }
+          setMeeting(data);
+        });
       } else {
         setMeeting({
           CohortId: cohortId,
