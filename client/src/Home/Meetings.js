@@ -23,7 +23,7 @@ function Meetings({ cohortId, cohortStartsOn }) {
     if (meetingWeekNumber < weekNumber) {
       meetingsListItems.push(
         <h5 key={`week-${meetingWeekNumber}`} className="meetings__header">
-          &lt; Week {meetingWeekNumber} &gt;
+          &lt; {meetingWeekNumber < 1 ? 'Applications Open' : `Week ${meetingWeekNumber}`} &gt;
         </h5>
       );
       weekNumber = meetingWeekNumber;
